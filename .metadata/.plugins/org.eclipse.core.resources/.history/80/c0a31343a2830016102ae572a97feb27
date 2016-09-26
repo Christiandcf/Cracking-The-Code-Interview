@@ -1,0 +1,25 @@
+import java.util.Hashtable;
+
+public class LinkedListMain {
+	
+	public static void main(String[] args){
+		LinkedListNode n = new LinkedListNode(0);
+		
+		n.appendToTail(1);
+		n.appendToTail(2);
+		n.appendToTail(3);
+		n.appendToTail(3);
+		n.appendToTail(4);
+
+		LinkedListNode.display(n);
+		
+		System.out.println();
+		LinkedListNode.removeDups(n);
+		
+		LinkedListNode.display(n);
+		
+		
+
+	}
+	
+}

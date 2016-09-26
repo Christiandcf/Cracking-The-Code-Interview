@@ -1,0 +1,135 @@
+/**
+ * Created by Christian on 9/21/2016.
+ */
+
+import java.util.Arrays;
+public class StringArrays {
+
+	public static void main(String[] args) {
+		// System.out.println(compress("aabcccccaaa"));
+		char[][] ok = new char[][] { { 'a', 'b', 'c' }, { 'd', 'e', 'f' },
+				{ 'g', 'h', 'i' },
+
+		};
+
+		// 1.7 testion
+		int[][] bomb = new int[][] { 
+				{ 0, 1, 1 }, 
+				{ 1, 0, 1 }, 
+				{ 1, 1, 1 }
+		};
+		for (int i = 0; i < bomb.length; i++) { // row
+			for (int j = 0; j < bomb[0].length; j++) { // columns
+				System.out.print(bomb[i][j]);
+			}
+			System.out.println();
+		}
+	
+		System.out.println();
+
+		setter(bomb);
+		
+		for (int i = 0; i < bomb.length; i++) { // row
+			for (int j = 0; j < bomb[0].length; j++) { // columns
+				System.out.print(bomb[i][j]);
+			}
+			System.out.println();
+		}
+		
+		
+		//1.8 testing
+		
+		String str = "waterbottle";
+		String str2 = "erbottlewat";
+		
+		System.out.println(isSubstring(str, str2));
+		
+		
+	}
+
+	// 1.8 Substring
+	
+	public static boolean isSubstring(String s, String s2){
+		char[] ss = s.toCharArray();
+		char[] ss2 = s2.toCharArray();
+		
+		Arrays.sort(ss);
+		Arrays.sort(ss2);
+		
+		if(ss.length != ss2.length){
+			return false;
+		}
+		
+		String nS = ss.toString();
+		String nS2 = ss2.toString();
+		
+		System.out.println(nS);
+		System.out.print(nS2);
+		
+		if(nS.equals(nS2)){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	// 1.7 MxN , if 0 is found set its row and column to 0
+	public static void setter(int[][] matrix) {
+		// boolean[][] flags = new boolean[matrix.length][matrix[0].length];
+
+		boolean[] row = new boolean[matrix.length];
+		boolean[] column = new boolean[matrix[0].length];
+		// [row][column]
+
+		for (int i = 0; i < matrix.length; i++) { // row
+			for (int j = 0; j < matrix[0].length; j++) { // columns
+				if (matrix[i][j] == 0) {
+					row[i] = true;
+					column[j] = true;
+				}
+			}
+		}
+		
+		for (int i = 0; i < matrix.length; i++) { // row
+			for (int j = 0; j < matrix[0].length; j++) { // columns
+				if (row[i] || column[j]) {
+					matrix[i][j] = 0;
+				}
+			}
+		}
+	}
+
+	// 1.6
+	public static char[][] rotation(char[][] matrix, int n) {
+		char[][] ret = new char[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				ret[i][j] = matrix[n - j - 1][i];
+				System.out.print(ret[i][j]);
+			}
+			System.out.println();
+		}
+
+		return ret;
+	}
+
+	// 1.5
+	public static String compress(String str) {
+		String mystr = "";
+		char last = str.charAt(0);
+		int count = 1;
+		int i = 0;
+		for (i = 1; i < str.length(); i++) {
+			if (str.charAt(i) == last) {
+				count++;
+			} else {
+				mystr += last + "" + count;
+				last = str.charAt(i);
+				count = 1;
+			}
+		}
+
+		return mystr + last + count;
+	}
+
+}

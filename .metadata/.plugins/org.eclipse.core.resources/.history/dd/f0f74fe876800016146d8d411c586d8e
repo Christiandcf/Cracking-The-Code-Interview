@@ -1,0 +1,31 @@
+/**
+ * Created by Christian on 9/21/2016.
+ */
+public class prob1_5 {
+	
+    public static void main(String[] args){
+        System.out.println(compress("aabcccccaaa"));
+    }
+
+    public static String compress(String s){
+        StringBuilder newS = new StringBuilder();
+        char[] st = s.toCharArray();
+
+        int i,k;
+        for (i = 0 ; i<st.length-1; i++){
+            k = 0;
+            if (st[i] == st [i++] && i++ < st.length -1){
+                newS.append(st[i]);
+                while(st[i] == st [i++]) {
+                    k++;
+                    i++;
+                }
+            }
+            newS.append(k);
+
+        }
+
+
+        return newS.toString();
+    }
+}
