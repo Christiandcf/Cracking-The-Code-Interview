@@ -1,0 +1,9 @@
+package practices;
+
+import practices.OneArrayThreeStacks;
+
+public class Stack_Queue_Main {
+
+	OneArrayThreeStacks s = new OneArrayThreeStacks();
+
+}

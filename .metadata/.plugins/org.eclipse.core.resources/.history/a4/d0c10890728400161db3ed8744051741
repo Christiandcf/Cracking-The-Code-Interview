@@ -1,0 +1,47 @@
+package practices;
+
+public class Stack {
+	Node top;
+
+	Object pop() {
+		if (top != null) {
+			Object item = top.data;
+			top = top.next;
+			return item;
+		}
+		return null;
+	}
+
+	void push(Object item) {
+		Node t = new Node(item);
+		t.next = top;
+		top = t;
+	}
+
+	Object peek() {
+		return top.data;
+	}
+	
+	public class OneArrayThreeStacks{
+		int stackSize = 5;
+		String[] array = new String[stackSize * 3]; // three stacks
+		int position;
+		int[] points = {0,0,0};
+		
+		public static void push(int stackNum, String item){
+			position = stackNum * stackSize + points[stackNum];
+			points[stackNum]++;
+			array[position] = item; 
+		}
+		
+		Object pop(int stackNum){
+			position = stackNum * stackSize + points[stackNum] + 1;
+			points[stackNum]--;
+			if(points[stackNum] == -1){
+				return "stack " + stackNum + " is empty"; 
+			}else{
+				return array[position];
+			}
+		}
+	}
+}
