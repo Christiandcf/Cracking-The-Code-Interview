@@ -142,7 +142,7 @@ public class StringsNArrays {
 		StringBuilder sb = new StringBuilder();
 		char last = s.charAt(0);
 		int count = 0;
-		for (int i = 0 ; i < s.length(); i++){
+		for (int i = 0 ; i < s.length() - 1; i++){
 			if(s.charAt(i) == last){
 				count+=1;
 			}else{
