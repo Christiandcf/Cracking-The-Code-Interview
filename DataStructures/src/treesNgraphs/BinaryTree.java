@@ -98,16 +98,12 @@ public class BinaryTree {
 			return true;
 		}
 
-		if (n.data <= min || n.data > Integer.MAX_VALUE) {
+		if (n.data <= min || n.data > max) {
 			return false;
 		}
 
 		// Will check all the left children until its null then it wil go up
-		if (!isBST(n.left, min, n.data) || !isBST(n.right, n.data, max)) {
-			return false;
-		}
-
-		return true;
+		return isBST(n.left, min, n.data) && isBST(n.right, n.data, max);
 	}
 
 	// 4.6 find the next node of a given node in a BST 15 --> 16
@@ -140,7 +136,7 @@ public class BinaryTree {
 		return null;
 	}
 
-	// 4.7 Common ancestor of two Nodes
+	// 4.7 Common ancestor of two Nodes Binary Tree
 
 	public Node lca(Node root, Node n1, Node n2) {
 		if (root == null)
@@ -161,6 +157,18 @@ public class BinaryTree {
 
 	}
 	
+	// LCA in A BST
+	
+	public Node lcaBST(Node root, Node n1, Node n2){
+		if (root.data > Math.max(n1.data, n2.data)){
+			return lcaBST(root.left, n1, n2);
+		}else if (root.data < Math.min(n1.data, n2.data)){
+			return lcaBST(root.right, n1, n2);
+		}
+		
+		return root;
+	}
+	
 	// 4.8 Check if tree is a sub tree
 	
 	public boolean containsTree(Node t1, Node t2){
@@ -171,7 +179,7 @@ public class BinaryTree {
 	
 	public boolean subTree(Node r1, Node r2){
 		if(r1 == null)
-			return null;
+			return false;
 		
 		if (r1.data == r2.data){
 			if (matchTree(r1,r2))
