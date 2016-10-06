@@ -1,0 +1,46 @@
+package AsixthEdition;
+
+public class LinkedList {
+	public static class Node {
+		Node next = null;
+		int data;
+
+		public Node(int d) {
+			data = d;
+		}
+
+		public void append(int d) {
+			Node end = new Node(d);
+			Node n = this;
+
+			while (n.next != null) {
+				n = n.next;
+			}
+			n.next = end;
+		}
+
+		public static Node delete(Node head, int d) {
+			Node n = head;
+
+			while (n.next != null) {
+				if (n.next.data == d) {
+					n.next = n.next.next;
+					return head;
+				}
+				n = n.next;
+			}
+
+			return head;
+		}
+		
+		public static void display(Node head){
+			while(head.next != null){
+				System.out.print(head.data + "--> ");
+				head = head.next;
+			}
+		}
+	}
+	
+	
+
+}

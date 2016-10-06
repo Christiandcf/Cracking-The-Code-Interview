@@ -1,0 +1,75 @@
+package AsixthEdition;
+
+import java.util.HashMap;
+import java.util.HashSet;
+
+import AsixthEdition.LinkedList.Node;
+
+public class LinkedList {
+	public static class Node {
+		Node next = null;
+		int data;
+
+		public Node(int d) {
+			data = d;
+		}
+
+		public void append(int d) {
+			Node end = new Node(d);
+			Node n = this;
+
+			while (n.next != null) {
+				n = n.next;
+			}
+			n.next = end;
+		}
+
+		public static Node delete(Node head, int d) {
+			Node n = head;
+			
+			if(n.data == d){
+				return head.next;
+			}
+
+			while (n.next != null) {
+				if (n.next.data == d) {
+					n.next = n.next.next;
+					return head;
+				}
+				n = n.next;
+			}
+
+			return head;
+		}
+		
+		public static void display(Node head){
+			while(head != null){
+				System.out.print(head.data);
+				if(head.next != null){
+					System.out.print(" --> ");
+				}
+				head = head.next;
+			}
+		}
+
+		// 2.1 Remove Duplicated unsorted List
+		public static void removeDups(Node head){
+			HashSet<Integer> set = new HashSet<Integer>();
+			Node n = null;
+			
+			while (n != null){
+				if(set.contains(n.data)){
+					n.next = head.next;
+				}else{
+					set.add(n.data);
+					n = head;
+				}
+				head = head.next;
+			}
+	    }
+	
+	
+	
+	
+	}
+}
