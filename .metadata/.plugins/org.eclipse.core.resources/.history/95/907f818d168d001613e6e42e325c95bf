@@ -1,0 +1,329 @@
+package AsixthEdition;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Stack;
+
+import AsixthEdition.LinkedList.Node;
+
+public class LinkedList {
+	public static class Node {
+		Node next = null;
+		int data;
+
+		public Node(int d) {
+			data = d;
+		}
+		public Node() {
+		}
+
+		public void append(int d) {
+			Node end = new Node(d);
+			Node n = this;
+
+			while (n.next != null) {
+				n = n.next;
+			}
+			n.next = end;
+		}
+
+		public static Node delete(Node head, int d) {
+			Node n = head;
+
+			if (n.data == d) {
+				return head.next;
+			}
+
+			while (n.next != null) {
+				if (n.next.data == d) {
+					n.next = n.next.next;
+					return head;
+				}
+				n = n.next;
+			}
+
+			return head;
+		}
+
+		public static int size(Node head) {
+			int size = 1;
+			for (Node n = head; n.next != null; n = n.next)
+				size++;
+			return size;
+		}
+
+		public static void display(Node head) {
+			while (head != null) {
+				System.out.print(head.data);
+				if (head.next != null) {
+					System.out.print(" --> ");
+				}
+				head = head.next;
+			}
+		}
+
+		// 2.1 Remove Duplicated unsorted List
+		public static void removeDups(Node n) {
+			HashSet<Integer> set = new HashSet<Integer>();
+			Node prev = null;
+
+			while (n != null) {
+				if (set.contains(n.data)) {
+					prev.next = n.next;
+				} else {
+					set.add(n.data);
+					prev = n;
+				}
+				n = n.next;
+			}
+		}
+
+		// 2.2 kth to last element
+
+		public static Node kthLast(Node head, int k) {
+			if (head == null) {
+				return 0;
+			}
+			Node n = head;
+			int count = 0;
+
+			// gives out length
+			while (n != null) {
+				count++;
+				n = n.next;
+			}
+
+			int spot = count - k;
+
+			for (int i = 0; i < spot; i++) {
+				head = head.next;
+			}
+			return head;
+		}
+
+		// Other solution
+
+		public static int kthLastAlt(Node head, int k) {
+			if (head == null)
+				return 0;
+
+			int index = kthLastAlt(head.next, k) + 1;
+
+			if (index == k) {
+				return head.data;
+			}
+
+			return index;
+		}
+
+		// 2.3 Delete middle Node, only access to it.
+
+		public static void middleDelete(Node mid) {
+			mid.data = mid.next.data;
+			mid.next = mid.next.next;
+		}
+
+		// 2.4 Partition around x value REVIEW
+
+		public static Node partition(Node n, int k) {
+			Node small = n;
+			Node big = n;
+
+			while (n != null) {
+				Node next = n.next;
+				if (n.data < k) {
+					n.next = small;
+					small = n;
+					// small = small.next;
+				} else {
+					big.next = n;
+					big = n;
+				}
+				n = next;
+			}
+
+			big.next = null;
+
+			return small;
+		}
+
+		// 2.5 Sum of the linked list.
+
+		public static String Sum(Node n1, Node n2) { // This will work only with same length
+			Node result = new Node(0);
+			StringBuilder sb = new StringBuilder();
+			int carry = 0;
+			int val = 0;
+			while (n1 != null || n2 != null) {
+				int tmp = n1.data + n2.data + carry;
+				carry = tmp / 10;
+				val = tmp % 10;
+
+				n1 = n1.next;
+				n2 = n2.next;
+
+				result.next = new Node(val);
+				result = result.next;
+				sb.append(result.data);
+
+			}
+			return sb.reverse().toString();
+		}
+		
+		// Will work with any length
+		public static int AltSum(Node n1, Node n2) {
+			Stack<Integer> stack1 = new Stack<>();
+			Stack<Integer> stack2 = new Stack<>();
+			StringBuilder sb1 = new StringBuilder();
+			StringBuilder sb2 = new StringBuilder();
+			
+			while(n1 != null || n2 != null){
+				if(n1 != null){
+					stack1.push(n1.data);
+					n1 = n1.next;
+				}else if (n2 != null){
+					stack2.push(n2.data);
+					n2 = n2.next;
+				}
+			}
+			
+			while(!stack1.isEmpty()){
+				sb1.append(stack1.pop());
+			}
+			
+			while(!stack2.isEmpty()){
+				sb2.append(stack2.pop());
+			}
+			
+			String s1 = sb1.toString();
+			String s2 = sb2.toString();
+			
+			int i1 = Integer.parseInt(s1);
+			int i2 = Integer.parseInt(s2);
+			
+			return i1+i2;
+		}
+		
+		// 2.6 Check is linked List is Palindrome
+		
+		public static boolean isPalindrome(Node n){
+			Stack<Integer> stack = new Stack<>();
+			Node slow = n;
+			Node fast = n;
+			
+			while(fast != null && fast.next!= null){
+				stack.push(slow.data);
+				slow = slow.next;
+				fast = fast.next.next;
+			}
+			if(fast != null){ //case for odd.
+				slow = slow.next;
+			}
+			
+			while(!stack.isEmpty()){
+				int tmp = stack.pop();
+				if(tmp != slow.data){
+					return false;
+				}
+				slow = slow.next;
+			}
+			return true;
+		}
+
+		// 2.7 check for intersection of 2 lists
+		
+		public static Node intercepting(Node n1, Node n2){
+			if(n1 == null || n2 == null){
+				return null;
+			}
+			Result r1 = getTailandSize(n1);
+			Result r2 = getTailandSize(n2);
+			
+			Node shorter = r1.size < r2.size ? n1 : n2;
+			Node longer = r1.size < r2.size ? n2 : n1;
+			
+			if(r1.tail != r2.tail){
+				return null;
+			}
+			
+			// make longer the same length as shorter 
+			longer = kthLast(longer, Math.abs(r1.size - r2.size));
+			
+			// look for intersection
+			while(longer != shorter){
+				longer = longer.next;
+				shorter = shorter.next;
+			}
+			
+			return shorter;
+
+		}
+		
+		// Object of Result that will contain the last node and the size;
+		public static class Result{
+			public Node tail;
+			public int size;
+			
+			public Result(Node tail, int size){
+				this.tail = tail;
+				this.size = size;
+			}
+		}
+		
+		public static Result getTailandSize(Node n){
+			int size = 1;
+			Node curr = n;
+			while(curr.next != null){
+				size += 1;
+				curr = curr.next;
+			}
+			
+			return new Result(curr, size);
+		}
+	}
+	
+	// 2.8 Loop Detection, find beginning of the loop
+	
+	public static Node begLoop(Node head){
+		if(head == null){
+			return null;
+		}
+		
+		Node turtle = head;
+		Node rabbit = head;
+		
+		// verify there is a loop fast/slow algo -here
+		while(rabbit != null){
+			turtle = turtle.next;
+			rabbit = rabbit.next.next;
+			
+			if (turtle == rabbit){
+				break;
+			}
+		}
+		
+		// the loop was not infinite...
+		if (rabbit == null || rabbit.next == null){
+			return null;
+		}
+		
+		turtle = head;
+		
+		// move them at same speed
+		while (turtle != rabbit){
+			turtle = turtle.next;
+			rabbit = rabbit.next;
+		}
+		
+		return turtle; // either
+	}
+}
+
+
+
+
+
+
+
+
+
