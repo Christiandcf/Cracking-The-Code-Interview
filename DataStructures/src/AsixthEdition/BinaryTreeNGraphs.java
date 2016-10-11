@@ -1,10 +1,14 @@
 package AsixthEdition;
 
+import java.util.ArrayList;
+
 import AsixthEdition.LinkedList.Node;
 
 
 
 public class BinaryTreeNGraphs {
+	
+	// 4.1 Route between two nodes DFS or BFS
 
 	// 4.2 Create a Binary Search tree given an array.
 	
@@ -29,6 +33,7 @@ public class BinaryTreeNGraphs {
 	// linked list of all the node at each depth.
 	
 	//TODO
+	
 	
 	// 4.4 check if tree is balanced
 	
@@ -99,6 +104,177 @@ public class BinaryTreeNGraphs {
 		
 		return true;
 	}
+	
+	// 4.6 Successor of the node
+	public static Node successor(Node root){
+		int[] arr = new int[root.size];
+		
+		arrCreate(root, arr);
+		
+		for(int i = 0; i < arr.length - 1; i++){
+			if(arr[i] == root.data){
+				return root;
+			}
+			root = root.next;
+		}
+		return null;
+	}
+	
+	public static int in = 0;
+	public static void arrCreate(Node root, int[] arr){
+		if (root == null){
+			return;
+		}
+		
+		arrCreate(root.left, arr);
+		arr[in] = root.data;
+		in++;
+		arrCreate(root.right, arr);
+		
+	}
+	
+	// 4.9 lowest common ancestor NEEDS RECURSION
+	public static Node lca(Node root, Node n1, Node n2){
+		if(root == null){
+			return null;
+		}
+		
+		// check if root is either of the number we are looking for
+		if(root == n1 || root == n2){ 
+			return root;
+		}
+		
+		
+		Node left = lca(root.left, n1, n2);
+		Node right = lca(root.right, n1, n2);
+		
+		if(left != null && right != null){
+			return root;
+		}
+		if(left == null && right == null){
+			return null;
+		}
+		
+		return left != null ? left : right;
+	}
+	
+	// lowest common ancestor for a BST
+	public static Node lcaBST(Node root, Node n1, Node n2){
+		if(root.data < Math.max(n1.data , n2.data)){
+			lcaBST(root.left, n1, n2);
+		}
+		if(root.data > Math.min(n1.data, n2.data)){
+			lcaBST(root.right,n1,n2);
+		}
+		
+		return root;
+	}
+	
+	// 4.9 Print all arrays that can produce a given BST
+	// Going to use simple tree traversals
+	
+	public static int IO = 0;
+	public static int PO = 0;
+	public static int PR = 0;
+
+	public static void makeArr(Node n){
+		
+	}
+	
+	public static int[] inOrder(Node n){
+		int[] inOrder = new int[n.size];
+		if(n != null){
+			inOrder(n.left);
+			inOrder[IO] = n.data;
+			IO++;
+			inOrder(n.right);
+		}
+		return inOrder;
+	}
+	
+	// 4.10 check if Subtree
+	
+	public static boolean containsTree(Node t1, Node t2){
+		StringBuilder sb1 = new StringBuilder();
+		StringBuilder sb2 = new StringBuilder();
+		
+		// Gets the order of the string, modifies the Strings
+		getOrderTree(t1, sb1);
+		getOrderTree(t2, sb2);
+		
+		// check if the tree is in t1
+		return sb1.indexOf(sb2.toString()) != -1; 
+	
+	}
+	
+	public static void getOrderTree(Node n, StringBuilder sb){
+		if (n == null){ 
+			sb.append("X"); // indicates null
+			return;
+		}
+		
+		// pre order traversal here
+		sb.append(n.data + " "); // adds root
+		getOrderTree(n.left, sb); // add left
+		getOrderTree(n.right, sb); // adds right
+	}
+	
+	// 4.12 Path in Binary Tree with a sum. may only go down
+	public static boolean sumPath(Node n, int sum, ArrayList<Integer> result){
+		
+		if (n == null) return false;
+		int leftovers = sum - n.data;
+		
+		// check if Node is a child
+		if(n.left == null && n.right == null){
+			if(n.data == leftovers){
+				 result.add(n.data);
+				 return true;
+			}else{
+				return false;
+			}
+		}
+		
+		// check if its false, if it it wont go here
+		if(sumPath(n.left , sum - n.data, result)){ //check left
+			result.add(n.data);
+			return true;
+		}
+		if(sumPath(n.right, sum - n.data, result)){ //check right
+			result.add(n.data);
+			return true;
+		}
+		return false;
+	}
+
+	
+	
+	// Bonus
+	
+	// Check for Symmetry
+	
+	public static boolean isSymetric(Node n1, Node n2){
+		if( n1 == null && n2 == null){
+			return true;
+		}
+		
+		if(n1 == null || n2 == null){
+			return false;
+		}
+		
+		if(n1.data == n2.data){
+			if(isSymetric(n1.left, n2.right) && isSymetric(n1.right, n2.left)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	// 4.11
+	
+	
+	// 4.12
 }
 
 

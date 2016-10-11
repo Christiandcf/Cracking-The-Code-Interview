@@ -1,0 +1,53 @@
+package AsixthEdition;
+
+public class Sorting {
+
+	public static void main(String[] args) {
+		int[] test = { 3, 1, 2, 0 };
+		bubbleSort(test);
+
+		for (int i = 0; i < test.length; i++) {
+			System.out.print(test[i]);
+		}
+	}
+
+	/*
+	 * Compare every element if its smaller then swap to the left.
+	 */
+	public static void bubbleSort(int[] arr) {
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 1; j < arr.length - i; j++) {
+				if (arr[j - 1] > arr[j]) {
+					// swap values
+					int tmp = arr[j - 1];
+					arr[j - 1] = arr[j];
+					arr[j] = tmp;
+				}
+			}
+		}
+	}
+
+	/*
+	 * Find smallest element using a linear scan and move it to front, find
+	 * second smallest.
+	 */
+
+	public static void selectionSort(int[] arr){
+		int sIndex = 0;
+		
+		for(int i = 0; i < arr.length -1; i++){
+			int small = Integer.MAX_VALUE;
+			for(int j = i; j < arr.length -1 ; j++){
+				if(small < arr[j]){
+					sIndex = j;
+				}
+			}
+			//swap
+			int tmp = arr[i];
+			arr[i] = arr[sIndex];
+			arr[sIndex] = tmp;
+		}
+		
+		
+	}
+}

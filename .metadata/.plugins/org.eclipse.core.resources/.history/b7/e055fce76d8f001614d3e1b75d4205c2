@@ -1,0 +1,92 @@
+package AsixthEdition;
+
+public class Sorting {
+
+	/*
+	 * This both are In place sorting O(1) memory
+	 */
+	
+	// Compare every element if its smaller then swap to the left.
+	public static void bubbleSort(int[] arr) {
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 1; j < arr.length - i; j++) {
+				if (arr[j - 1] > arr[j]) {
+					// swap values
+					int tmp = arr[j - 1];
+					arr[j - 1] = arr[j];
+					arr[j] = tmp;
+				}
+			}
+		}
+	}
+	
+	 //Find smallest element using a linear scan and move it to front, find
+	// second smallest.
+	public static void selectionSort(int[] arr) {
+
+		for (int i = 0; i < arr.length; i++) {
+			int sIndex = i;
+			for (int j = i + 1; j < arr.length; j++) {
+				if (arr[j] < arr[sIndex]) {
+					sIndex = j;
+				}
+			}
+			// swap
+			if (sIndex != i) {
+				int tmp = arr[i];
+				arr[i] = arr[sIndex];
+				arr[sIndex] = tmp;
+			}
+		}
+	}
+	
+	/*
+	 * LEGENDARY BINARY SEARCH ! ! ! ! !
+	 */
+	
+	public static int binarySearch(int[] arr, int x){
+		int low = 0;
+		int high = arr.length - 1;
+		int mid;
+		
+		while (low <= high){
+			mid = (low + high) /2;
+			
+			if(arr[mid] < x){ // look right;
+				low = mid + 1;
+			}else if(arr[mid] > x){ // look left;
+				high = mid - 1;
+			}else{
+				return mid;
+			}
+		}
+		
+		return -1;
+	}
+	
+	public static int binarySearchRec(int[] arr, int x, int low, int high){
+		if(low > high) return -1;
+		
+		int mid = (low + high) /2;
+		
+		if(arr[mid] > x){ // looks left
+			binarySearchRec(arr, x, low, mid - 1);
+		}else if(arr[mid] < x){ // looks right
+			binarySearchRec(arr, x, mid + 1 , high );
+		}
+		return mid;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -38,7 +38,7 @@ public class StringsNArrays {
 
 		// 1.9
 		
-		System.out.println(isRotation("hello", "lloha"));
+		System.out.println(removeDups("tomato"));
 
 	}
 
@@ -242,6 +242,24 @@ public class StringsNArrays {
 		String r2 = new String(ss2);
 		
 		return r1.equals(r2);
+	}
+	
+	// Bonus
+	
+	// NO HASHMAP ALLOWED Let's use a ASCII set
+	public static String removeDups(String s){
+		StringBuilder sb = new StringBuilder();
+		boolean[] set = new boolean[128];
+		
+		for(int i = 0; i < s.length(); i++){
+			int c = s.charAt(i); // int is the ASCII of the character
+			
+			if(!set[c]){
+				sb.append(s.charAt(i));
+				set[c] = true;
+			}
+		}
+		return sb.toString();
 	}
 }
 

@@ -46,7 +46,6 @@ public class LinkedListMain {
 
 		//System.out.println("result: " + Node.AltSum(n2, n3));
 		int[] arr = {1,2,3,4,5};
-		System.out.println(arr.length / 2);
 
 		//System.out.println(Node.isPalindrome(n3));
 
