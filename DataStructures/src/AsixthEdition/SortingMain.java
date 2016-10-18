@@ -1,5 +1,8 @@
 package AsixthEdition;
-import AsixthEdition.Sorting;;
+
+import AsixthEdition.Sorting;
+
+;
 public class SortingMain {
 	public static void main(String[] args) {
 		int[] test = { 3, 2, 1, 0 };
@@ -9,6 +12,11 @@ public class SortingMain {
 		for (int i = 0; i < test.length; i++) {
 			System.out.print(test[i]);
 		}
+
+		String[] s = { "at", "", "", "", "ball", "", "", "car", "", "", "dad",
+				"", "" };
+		
+		System.out.print(Sorting.sparseSearch(s, "ball"));
 	}
 
 }

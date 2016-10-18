@@ -45,10 +45,89 @@ public class Sorting {
 		}
 	}
 	
+	// MergeSort
+	
+	public static void mergesort(int[] arr, int[] helper, int low, int high){
+		if(low<high){
+			int mid = (high + low) /2;
+			mergesort(arr, helper, low, mid); // sort left 
+			mergesort(arr, helper, mid + 1, high); // sort right
+			merge(arr, helper, low, mid, high); //merge them together
+		}
+	}
+	
+	public static void merge(int[] arr, int[] helper, int low, int mid, int high){
+		// Copy both halves into a helper array
+		for(int i = low; i <= high; i++){
+			helper[i] = arr[i];
+		}
+		
+		int helpLeft = low;
+		int helpRight = high;
+		int current = low;
+		
+		//compare the left and right half, copying the smaller element into the OG arr
+		
+		while(helpLeft <= mid && helpRight <= high){
+			if(helper[helpLeft] <- helper[helpRight]){
+				arr[current] = helper[helpLeft];
+				helpLeft++;
+			}else{
+				arr[current] = helper[helpRight];
+				helpRight++;
+			}
+			current++;
+		}
+		
+		int remain = mid - helpLeft;
+		
+		for(int i = 0; i <= remain; i++){
+			arr[current + i] = helper[helpLeft + i];
+		}
+	}
+	
+	// Quick Sort
+	
+	public static void quickSort(int[] arr, int left, int right){
+		int index = partition(arr, left, right);
+		if(left < index - 1){ // soft left half
+			quickSort(arr,left, index-1);
+		}
+		
+		if(index > right){ //Sort right half
+			quickSort(arr, index, right);
+		}
+	}
+	
+	public static int partition(int[] arr, int left, int right){
+		int mid = (left + right) /2;
+		int pivot = arr[mid]; // pivot can be arbitrary
+		
+		while(left <= right){
+			
+			// Find element on left that should be on the right
+			while(arr[left] < pivot) left++;
+			
+			// Find element on right that should be on the left
+			while(arr[right] > pivot) right--;
+			
+			// Swap element, and move left and right indices;
+			if(left <= right){
+				int tmp = left;
+				left = right;
+				right = tmp;
+				
+				left++;
+				right--;
+			}
+		}
+		
+		return left;
+	}
+	
 	/*
 	 * LEGENDARY BINARY SEARCH ! ! ! ! !
 	 */
-	
 	public static int binarySearch(int[] arr, int x){
 		int low = 0;
 		int high = arr.length - 1;
@@ -106,25 +185,25 @@ public class Sorting {
 	// 10.2 Group Anagrams, given a array of String put all anagrams together.
 	// Modification of bucket sort
 	
-	public static void sortAnagram(String[] string){
-		HashMap<String,String> map = new HashMap<>();
-		
-		// Group by anagram
-		for(String s: string){
-			String key = sortChar(s);
-			map.put(key, s);
-		}
-		
-		// convert hashmap to array;
-		int index = 0;
-		for(String key : map.keySet()){
-			ArrayList<String> list = map.get(key);
-			for(String t: list){
-				string[index] = t; // overrides the current string array
-				index++;
-			}
-		}
-	}
+//	public static void sortAnagram(String[] string){
+//		HashMap<String,String> map = new HashMap<>();
+//		
+//		// Group by anagram
+//		for(String s: string){
+//			String key = sortChar(s);
+//			map.put(key, s);
+//		}
+//		
+//		// convert hashmap to array;
+//		int index = 0;
+//		for(String key : map.keySet()){
+//			ArrayList<String> list = map.get(key);
+//			for(String t: list){
+//				string[index] = t; // overrides the current string array
+//				index++;
+//			}
+//		}
+//	}
 	
 	// Sort the Strings by char
 	public static String sortChar(String s){
@@ -176,6 +255,86 @@ public class Sorting {
 	}
 	
 	// 10.5 Sorted Array of Strings, interspersed with empty strings. find the index of a given string.
+	public static int sparseSearch(String[] s, String target){
+		if(s.length == 0){
+			return 0;
+		}
+		
+		for(int i = 0; i < s.length; i++){
+			if(target.equals(s[i])){
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
+	// Faster way
+	public static int search(String[] string, String target, int first, int last){
+		if(first > last){
+			return -1;
+		}
+		
+		int mid = (first + last) / 2;
+		
+		if(string[mid] == ""){
+			int left = mid - 1;
+			int right = mid + 1;
+			
+			// If mid is empty, find closest non-empty string;
+			while(true){
+				if(left < mid && right > last){
+					return -1;
+				}else if(right <= last && !string[right].isEmpty()){
+					mid = right;
+					break;
+				}else if(left >= first && !string[left].isEmpty()){
+					mid = left;
+					break;
+				}
+				right++;
+				left--;
+			}
+		}
+		
+		// Check for string and recurse BINARY SEARCH
+		if(target.equals(string[mid])){
+			return mid;
+		}else if(target.compareTo(string[mid]) < 0){ // search to the right
+			return search(string, target, mid + 1, last);
+		}else if(target.compareTo(string[mid]) > 0){ // search to the left
+			return search(string, target, first, mid - 1); 
+		}
+		
+		return 0;
+	}
+	
+	public int search(String[] string, String target){
+		if(string == null || target == null || target == ""){
+			return -1;
+		}
+		return search(string, target, 0 , string.length);
+	}
+	
+	// 10.9 Sorted Matrix Search
+	public static int index = 0;
+	public static boolean searchMatrix(int[][] matrix, int k){
+		int row = 0;
+		int col = matrix[0].length;
+		
+		// traverse through the array
+		while (row < matrix.length && col > 0){
+			if(matrix[row][col] == k){
+				return true;
+			}else if(matrix[row][col] > k){
+				col--;
+			}else{
+				row++;
+			}
+		}
+		
+		return false;
+	}
 }
 
 

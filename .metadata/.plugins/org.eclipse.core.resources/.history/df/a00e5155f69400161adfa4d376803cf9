@@ -1,0 +1,47 @@
+package oop;
+
+public class OnlineReaderSystem {
+	private Library library;
+	private UserManage userManager;
+	private Display display;
+	
+	private Book activeBook;
+	private User activeUser;
+	
+	public OnlineReaderSystem(){
+		// All of these are objects
+		userManager = new UserManage();
+		library = new Library();
+		display = new Display();
+	}
+	
+	public Library getLibrary(){
+		return library;
+	}
+	
+	public UserManage getUserManager(){
+		return userManager;
+	}
+	
+	public Display getDisplay(){
+		return display;
+	}
+	
+	public Book getActiveBook(){
+		return activeBook;
+	}
+	
+	public void setActiveBook(Book book){
+		activeBook = book;
+		display.displayBook(book);
+	}
+	
+	public User getActiveUser(){
+		return activeUser;
+	}
+	
+	public void setActiveUser(User user){
+		activeUser = user;
+		display.displayUser(user);
+	}
+}

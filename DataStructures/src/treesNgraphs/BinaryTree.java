@@ -6,17 +6,7 @@ public class BinaryTree {
 		System.out.println(recursion(4));
 	}
 
-	private class Node {
-		private int data;
-		private Node left;
-		private Node right;
-		private Node parent;
 
-		public Node(int n) {
-			this.data = n;
-		}
-
-	}
 
 	// Find Height
 

@@ -17,9 +17,12 @@ public class StringsNArrays {
 		// System.out.println(compress("aabcccccaaa"));
 
 		int[][] bomb = new int[][] { { 1, 2, 0 }, { 4, 5, 6 }, { 7, 8, 9 } };
-		for (int i = 0; i < bomb.length; i++) { // row
-			for (int j = 0; j < bomb[0].length; j++) { // columns
-				System.out.print(bomb[i][j]);
+		int[][] bomb2 = new int[][] { { 1, 1, 1 }, { 1, 0, 1 }, { 1, 1, 1 } };
+		
+		setter(bomb2);
+		for (int i = 0; i < bomb2.length; i++) { // row
+			for (int j = 0; j < bomb2[0].length; j++) { // columns
+				System.out.print(bomb2[i][j]);
 			}
 			System.out.println();
 		}
@@ -33,12 +36,13 @@ public class StringsNArrays {
 			}
 			System.out.println();
 		}
-		
+
 		System.out.println();
 
 		// 1.9
-		
-		System.out.println(removeDups("tomato"));
+
+		System.out
+				.println(permutationPalindrome("animal  detail foliated  of stool loots  lamina"));
 
 	}
 
@@ -204,16 +208,16 @@ public class StringsNArrays {
 	public static int[][] setZeros(int[][] arr) {
 		int[] row = new int[arr.length];
 		int[] col = new int[arr[0].length];
-	//	int[][] newArr = new int[arr.length][arr[0].length];
+		// int[][] newArr = new int[arr.length][arr[0].length];
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr[0].length; j++) {
-				if(arr[i][j] == 0){
+				if (arr[i][j] == 0) {
 					row[i] = 1;
 					col[j] = 1;
 				}
 			}
 		}
-		
+
 		// IMPORTANT STEP HERE, needs to pass twice
 		for (int i = 0; i < arr.length; i++) { // row
 			for (int j = 0; j < arr[0].length; j++) { // columns
@@ -224,54 +228,93 @@ public class StringsNArrays {
 		}
 		return arr;
 	}
-	
+
 	// 1.9 String Rotation
-	
-	public static boolean isRotation(String s1, String s2){
-		if(s1.length() != s2.length()){
+
+	public static boolean isRotation(String s1, String s2) {
+		if (s1.length() != s2.length()) {
 			return false;
 		}
-		
+
 		char[] ss1 = s1.toCharArray();
 		char[] ss2 = s2.toCharArray();
-		
+
 		Arrays.sort(ss1);
 		Arrays.sort(ss2);
-		
+
 		String r1 = new String(ss1);
 		String r2 = new String(ss2);
-		
+
 		return r1.equals(r2);
 	}
-	
+
 	// Bonus
-	
+
 	// NO HASHMAP ALLOWED Let's use a ASCII set
-	public static String removeDups(String s){
+	public static String removeDups(String s) {
 		StringBuilder sb = new StringBuilder();
 		boolean[] set = new boolean[128];
-		
-		for(int i = 0; i < s.length(); i++){
+
+		for (int i = 0; i < s.length(); i++) {
 			int c = s.charAt(i); // int is the ASCII of the character
-			
-			if(!set[c]){
+
+			if (!set[c]) {
 				sb.append(s.charAt(i));
 				set[c] = true;
 			}
 		}
 		return sb.toString();
 	}
+
+	// check if permutation is a palindrome
+	public static boolean permutationPalindrome(String s) {
+		s.trim();
+		char[] c = s.toCharArray();
+		Arrays.sort(c);
+		int odd = 0;
+		int i = 0;
+		for (i = 0; i < c.length - 1; i++) {
+			System.out.println(c[i]);
+			System.out.println(c[i + 1]);
+			System.out.println();
+
+			if (c[i] == c[i + 1]) {
+				i++;
+			} else {
+				odd++;
+			}
+		}
+
+		return odd <= 1;
+	}
+
+	// the bomb setter
+
+	public static int[][] setter(int[][] matrix) {
+		if (matrix.length == 0) {
+			return null;
+		}
+
+		boolean[] rows = new boolean[matrix.length];
+		boolean[] cols = new boolean[matrix[0].length];
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				if (matrix[i][j] == 0) {
+					rows[i] = true;
+					cols[j] = true;
+				}
+			}
+		}
+
+		for (int i = 0; i < rows.length; i++) {
+			for (int j = 0; j < cols.length; j++) {
+				if (rows[i] == true || cols[j] == true) {
+					matrix[i][j] = 0;
+				}
+			}
+		}
+
+		return null;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

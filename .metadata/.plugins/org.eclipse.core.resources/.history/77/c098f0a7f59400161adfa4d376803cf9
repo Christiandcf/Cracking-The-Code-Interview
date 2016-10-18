@@ -1,0 +1,12 @@
+package oop;
+
+public class BookReader {
+	private Library library;
+	private UserManage userManager;
+	private Display display;
+	
+	private Book activeBook;
+	private User activeUser;
+	
+	public BookReader =
+}

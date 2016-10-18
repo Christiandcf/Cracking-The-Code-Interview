@@ -1,0 +1,16 @@
+package oop;
+
+public class OnlineReaderSystem {
+	private Library library;
+	private UserManage userManager;
+	private Display display;
+	
+	private Book activeBook;
+	private User activeUser;
+	
+	public OnlineReaderSystem(){
+		userManager = this.userManager;
+		library = new Library();
+		display = new Display();
+	}
+}

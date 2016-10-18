@@ -93,6 +93,8 @@ public class BinaryTreeNGraphs {
 			return false;
 		}
 	
+		// in order traversal 
+		
 		if(!isBST1(root.left)) return false;
 		
 		if(last != null && root.data <= last){

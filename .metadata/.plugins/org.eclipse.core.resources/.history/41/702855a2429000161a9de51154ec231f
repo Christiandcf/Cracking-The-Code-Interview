@@ -1,0 +1,24 @@
+package AsixthEdition;
+
+public class Misc {
+	public static void main(String[] args){
+		System.out.print(squareRoot(25));
+	}
+	
+	public static long squareRoot(int x){
+		long low = 0;
+		long high = x;
+		long mid = (low + high) / 2;
+		while(mid*mid != x){
+			
+			mid = (low + high) /2;
+			if(mid*mid > x){
+				high = mid;
+			}else {
+				low = mid;
+			}
+		}
+		
+		return mid;
+	}
+}
